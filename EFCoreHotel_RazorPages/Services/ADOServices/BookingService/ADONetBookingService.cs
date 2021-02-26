@@ -74,7 +74,10 @@ namespace EFCoreHotel_RazorPages.Services.ADOServices.BookingService
         {
             string connectionString = configuration.GetConnectionString("HotelConnection");
             List<Booking> lst = new List<Booking>();
-            string sql = @"select Booking.Booking_id, Booking.Date_From, Booking.Date_To, Guest.Name, Guest.Address FROM Booking INNER JOIN Guest ON Booking.Guest_No = Guest.Guest_No where Booking.Room_No = @roomid;";
+            string sql = @"select Booking.Booking_id, Booking.Date_From, Booking.Date_To, Guest.Name, Guest.Address
+                            FROM Booking, Guest
+                            WHERE Guest.Guest_No = Booking.Guest_No
+                            AND Booking.Room_No = @roomid";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
@@ -97,6 +100,36 @@ namespace EFCoreHotel_RazorPages.Services.ADOServices.BookingService
             }
             return lst;
         }
+        //public int GetBookinsPerHotel(int hotelid)
+        //{
+        //    string connectionString = configuration.GetConnectionString("HotelConnection");
+        //    List<Booking> lst = new List<Booking>();
+        //    string sql = @"SELECT COUNT(Booking.Booking_id) FROM Hotel, Booking
+        //                WHERE Booking.Hotel_No = Hotel.Hotel_No 
+        //                AND Booking.Date_From <= '2011/03/31'
+        //                AND Booking.Date_To >= '2011/03/01'";
+        //    using (SqlConnection connection = new SqlConnection(connectionString))
+        //    {
+        //        connection.Open();
+        //        SqlCommand command = new SqlCommand(sql, connection);
+        //        command.Parameters.AddWithValue("@roomid",roomid);
+        //        using (SqlDataReader dataReader = command.ExecuteReader())
+        //        {
+        //            while (dataReader.Read())
+        //            {
+        //                Booking booking = new Booking();
+        //                booking.Guest = new Guest();
+        //                booking.BookingId = Convert.ToInt32(dataReader[0]);
+        //                booking.DateFrom = Convert.ToDateTime(dataReader[1]);
+        //                booking.DateTo = Convert.ToDateTime(dataReader[2]);
+        //                booking.Guest.Name = Convert.ToString(dataReader[3]);
+        //                booking.Guest.Address = Convert.ToString(dataReader[4]);
+        //                lst.Add(booking);
+        //            }
+        //        }
+        //    }
+        //    return lst;
+        //}
 
     }
 }

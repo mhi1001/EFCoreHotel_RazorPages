@@ -70,9 +70,7 @@ namespace EFCoreHotel_RazorPages.Services.ADOServices.HotelService
                         {
                             return 0;
                         }
-
                         income = Convert.ToDouble(dataReader[0]);
-
                     }
                 }
             }

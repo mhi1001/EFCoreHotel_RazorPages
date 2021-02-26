@@ -1,0 +1,34 @@
+﻿@page
+@model EFCoreHotel_RazorPages.Pages.Hotels.HotelDetails_RoomInfoModel
+@{
+}
+
+<h4 style="color:red"> List of bookings</h4>
+<table class="table">
+    <thead>
+    <tr>
+        <th> Booking Id  </th>
+        <th> From  </th>
+        <th> To  </th>
+        <th> Guest Name </th>
+        <th> Guest Address</th>
+       
+    </tr>
+    </thead>
+    <tbody>
+
+    @if (Model.Bookings != null)
+    {
+        @foreach (var item in Model.Bookings)
+        {
+            <tr>
+                <td>  @item.BookingId</td>     
+                <td>  @item.DateFrom  </td>
+                <td>  @item.DateTo </td>
+                <td>  @item.Guest.Name </td>
+                <td>  @item.Guest.Address</td>
+                
+            </tr>
+        }
+    }
+</table>

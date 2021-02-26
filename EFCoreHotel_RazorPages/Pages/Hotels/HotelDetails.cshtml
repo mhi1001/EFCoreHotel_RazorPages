@@ -1,0 +1,33 @@
+﻿@page
+@using EFCoreHotel_RazorPages.Services.Interface
+@model EFCoreHotel_RazorPages.Pages.Hotels.HotelDetailsModel
+@{
+}
+
+
+<h1>Details of @Model.HotelName ---- Total of Rooms -> @Model.RoomCount</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th> Room No  </th>
+            <th> Hotel No </th>
+            <th> Room Type  </th>
+            <th> Price </th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @if (Model.Rooms != null)
+        {
+            @foreach (var item in Model.Rooms)
+            {
+                <tr>
+                    <td>@item.RoomNo  </td>
+                    <td>  @item.HotelNo </td>
+                    <td>  @item.Types </td>
+                    <td> @item.Price</td>
+                     <td><a asp-route-roomid="@item.RoomNo" asp-page="HotelDetails_RoomInfo">Room Bookings Info</a></td>
+                </tr>
+            }
+        }
+</table>

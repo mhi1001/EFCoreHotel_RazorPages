@@ -1,0 +1,49 @@
+﻿@page
+@model EFCoreHotel_RazorPages.GetRoomsModel
+@{
+    ViewData["Title"] = "GetRooms";
+}
+
+<h1>List of  rooms</h1>
+<form>
+    <div class="form-group">
+        <input asp-for="@Model.Type" placeholder="Insert Type of Room" class="form-control" />
+        @*<span asp-validation-for="@Model.Type" class="text-danger"></span>*@
+    </div>
+    <div class="form-group">
+        <input asp-for="@Model.Price" placeholder="Price under...." class="form-control" />
+        @*<span asp-validation-for="@Model.Price" class="text-danger"></span>*@
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Filter" class="btn btn-primary" asp-page-handler="Filter" />
+    </div>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>  Room No  </th>
+            <th> Price  </th>
+            <th> Types </th>
+            <th>  Hotel No </th>
+            </tr>
+    </thead>
+    <tbody>
+
+        @if (Model.Rooms != null)
+        {
+            @foreach (var item in Model.Rooms)
+            {
+        <tr>
+            <td> @item.RoomNo  </td>
+            <td>  @item.Price </td>
+            <td>  @item.Types </td>
+            <td>  @item.HotelNo  </td>
+            
+        </tr>
+            }
+        }
+</table>
+
+
+
+

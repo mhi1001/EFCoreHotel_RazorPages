@@ -1,0 +1,41 @@
+﻿@page
+@model EFCoreHotel_RazorPages.Pages.Bookings.GetSpecificBookingsModel
+@{
+}
+<h1>Get all the guests in a specific day of a specific hotel</h1>
+<form method="post">
+    <div class="form-group">
+        Date: <input class="form-control" asp-for="DateTime" />
+    </div>
+    <div class="form-group">
+        <input asp-for="@Model.HotelName" placeholder="HotelName" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Get Guests" class="btn btn-primary"/>
+    </div>
+</form>
+<table class="table">
+    <thead>
+    <tr>
+        <th>    </th>
+        <th> Guest Name  </th>
+        <th> Guest Address </th>
+        <th>  Guest GuestNo </th>
+    </tr>
+    </thead>
+    <tbody>
+
+    @if (Model.Guests != null)
+    {
+        @foreach (var item in Model.Guests)
+        {
+            <tr>
+                <td> @item.Name  </td>
+                <td>  @item.Address </td>
+                <td>  @item.GuestNo </td>
+
+            </tr>
+        }
+    }
+</table>

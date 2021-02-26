@@ -1,0 +1,41 @@
+﻿@page
+@using EFCoreHotel_RazorPages.Models
+@using EFCoreHotel_RazorPages.Services.Interface
+@model EFCoreHotel_RazorPages.GetHotelsModel
+@{
+    ViewData["Title"] = "GetHotels";
+}
+
+<h1>List of Hotels</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th> Hotel Id  </th>
+            <th> Name </th>
+            <th> Address  </th>
+            <th> </th>
+            <th> Total Room Count</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @if (Model.Hotels != null)
+        {
+
+            @foreach (var item in Model.Hotels)
+            {
+
+                <tr>
+                    <td>@item.HotelNo  </td>
+                    <td>  @item.Name </td>
+                    <td>  @item.Address </td>
+                    <td><a asp-route-roomCount="@item.RoomCount" asp-route-hotelName="@item.Name" asp-route-hotelNo="@item.HotelNo" asp-page="HotelDetails">All Rooms</a></td>
+                    <td>@item.RoomCount</td>
+                </tr>
+            }
+        }
+</table>
+
+
+
+

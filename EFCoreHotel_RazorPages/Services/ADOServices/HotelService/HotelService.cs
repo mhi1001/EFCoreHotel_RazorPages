@@ -19,5 +19,10 @@ namespace EFCoreHotel_RazorPages.Services.ADOServices.HotelService
         {
             return hotelService.GetHotels();
         }
+
+        public double GetSpecificDayIncome(string hotelName, DateTime date)
+        {
+            return hotelService.GetSpecificDayIncome(hotelName, date);
+        }
     }
 }

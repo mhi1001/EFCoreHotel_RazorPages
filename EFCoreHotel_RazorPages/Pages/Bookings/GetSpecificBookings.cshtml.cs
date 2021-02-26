@@ -7,6 +7,7 @@ using EFCoreHotel_RazorPages.Models;
 using EFCoreHotel_RazorPages.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace EFCoreHotel_RazorPages.Pages.Bookings
 {
@@ -36,8 +37,10 @@ namespace EFCoreHotel_RazorPages.Pages.Bookings
         }
         public void OnPost()
         {
-           
-           Guests = guestService.GetSpecificGuests(HotelName, DateTime);
+            if (ModelState.IsValid)
+            {
+                Guests = guestService.GetSpecificGuests(HotelName, DateTime);
+            }
         }
     }
 }

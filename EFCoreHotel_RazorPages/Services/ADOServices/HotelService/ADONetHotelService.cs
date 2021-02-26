@@ -28,16 +28,55 @@ namespace EFCoreHotel_RazorPages.Services.ADOServices.HotelService
                 {
                     while (dataReader.Read())
                     {
-                        Hotel hotel= new Hotel();
+                        Hotel hotel = new Hotel();
                         hotel.HotelNo = Convert.ToInt32(dataReader[0]);
-                        hotel.Name= Convert.ToString(dataReader[1]);
+                        hotel.Name = Convert.ToString(dataReader[1]);
                         hotel.Address = Convert.ToString(dataReader[2]);
                         hotel.RoomCount = Convert.ToInt32(dataReader[3]);
-                       lst.Add(hotel);
+                        lst.Add(hotel);
                     }
                 }
             }
             return lst;
+        }
+        public double GetSpecificDayIncome(string hotelName, DateTime date)
+        {
+            string connectionString = configuration.GetConnectionString("HotelConnection");
+            double income = 0;
+
+
+            string sql = @"SELECT SUM(Price) 
+                        FROM Booking, Room, Hotel
+                        WHERE (Booking.Date_From <= @date
+                        AND Booking.Date_To >= @date)
+                        AND Room.Hotel_No = Hotel.Hotel_No
+                        AND Room.Hotel_No = Booking.Hotel_No
+                        AND Room.Room_No = Booking.Room_No
+                        AND Hotel.Name = @hotelName";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand(sql, connection);
+                command.Parameters.AddWithValue("@hotelName", hotelName);
+                command.Parameters.AddWithValue("@date", date);
+
+                using (SqlDataReader dataReader = command.ExecuteReader())
+                {
+                    while (dataReader.Read()) // while I am reading row by row
+                    {
+
+                        // income = Convert.ToDouble(dataReader[0]);
+                        if (dataReader[0] == DBNull.Value)
+                        {
+                            return 0;
+                        }
+
+                        income = Convert.ToDouble(dataReader[0]);
+
+                    }
+                }
+            }
+            return income;
         }
     }
 }

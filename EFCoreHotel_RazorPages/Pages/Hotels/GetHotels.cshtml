@@ -7,6 +7,27 @@
 }
 
 <h1>List of Hotels</h1>
+<h2>Income calculator</h2>
+<table class="table">
+    <thead>
+    <tr>
+        Input the specific day, and the hotel name to get the total income for all bookings on that specific day
+    </tr>
+    </thead>
+</table>
+<form>
+    <div class="form-group">
+        Date: <input class="form-control" asp-for="DateTime" />
+    </div>
+    <div class="form-group">
+        <input asp-for="@Model.HotelName" placeholder="HotelName" class="form-control" />
+    </div>
+    Total Income :  @Model.Income
+    <div class="form-group">
+        <input type="submit" value="Get Income" class="btn btn-primary"/>
+    </div>
+</form>
+
 <table class="table">
     <thead>
         <tr>

@@ -75,10 +75,6 @@ namespace EFCoreHotel_RazorPages.Services.ADOServices.GuestService
             string connectionString = configuration.GetConnectionString("HotelConnection");
             List<Guest> lst = new List<Guest>(); //Filtered results get added to this list and then it is returned by the method
             
-            
-            
-              
-            
 
             string sql = @"SELECT Guest.Name, Guest.Address, Guest.Guest_No 
                             FROM Guest, Booking, Hotel 

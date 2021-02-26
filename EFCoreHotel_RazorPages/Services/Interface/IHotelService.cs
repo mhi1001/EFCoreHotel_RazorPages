@@ -9,5 +9,7 @@ namespace EFCoreHotel_RazorPages.Services.Interface
   public   interface IHotelService
     {
         public IEnumerable<Hotel> GetHotels();
+
+        public double GetSpecificDayIncome(string hotelName, DateTime date);
     }
 }

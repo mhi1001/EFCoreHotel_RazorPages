@@ -12,6 +12,8 @@ namespace EFCoreHotel_RazorPages.Services.Interface
 
         public IEnumerable<Booking> GetBookingsByGuestNo(int guestNo);
 
-        public IEnumerable<Booking> GetBookingInfo(int roomid);
+        public IEnumerable<Booking> GetBookingInfo(int roomid, int hotelid);
+
+        public int GetBookinsPerHotel();
     }
 }

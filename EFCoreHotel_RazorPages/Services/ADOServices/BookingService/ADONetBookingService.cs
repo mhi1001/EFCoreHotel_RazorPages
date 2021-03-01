@@ -70,19 +70,17 @@ namespace EFCoreHotel_RazorPages.Services.ADOServices.BookingService
             }
             return lst;
         }
-        public List<Booking> GetBookingInfo(int roomid)
+        public List<Booking> GetBookingInfo(int roomid, int hotelid)
         {
             string connectionString = configuration.GetConnectionString("HotelConnection");
             List<Booking> lst = new List<Booking>();
-            string sql = @"select Booking.Booking_id, Booking.Date_From, Booking.Date_To, Guest.Name, Guest.Address
-                            FROM Booking, Guest
-                            WHERE Guest.Guest_No = Booking.Guest_No
-                            AND Booking.Room_No = @roomid";
+            string sql = @"select * from Booking where Booking.Hotel_No = @hotelid and Booking.Room_No = @roomid";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
                 SqlCommand command = new SqlCommand(sql, connection);
                 command.Parameters.AddWithValue("@roomid",roomid);
+                command.Parameters.AddWithValue("@hotelid",hotelid);
                 using (SqlDataReader dataReader = command.ExecuteReader())
                 {
                     while (dataReader.Read())
@@ -90,46 +88,47 @@ namespace EFCoreHotel_RazorPages.Services.ADOServices.BookingService
                         Booking booking = new Booking();
                         booking.Guest = new Guest();
                         booking.BookingId = Convert.ToInt32(dataReader[0]);
-                        booking.DateFrom = Convert.ToDateTime(dataReader[1]);
-                        booking.DateTo = Convert.ToDateTime(dataReader[2]);
-                        booking.Guest.Name = Convert.ToString(dataReader[3]);
-                        booking.Guest.Address = Convert.ToString(dataReader[4]);
+                        booking.HotelNo = Convert.ToInt32(dataReader[1]);
+                        booking.GuestNo = Convert.ToInt32(dataReader[2]);
+                        booking.DateFrom = Convert.ToDateTime(dataReader[3]);
+                        booking.DateTo = Convert.ToDateTime(dataReader[4]);
+                        booking.RoomNo = Convert.ToInt32(dataReader[5]);
+                   
                         lst.Add(booking);
                     }
                 }
             }
             return lst;
         }
-        //public int GetBookinsPerHotel(int hotelid)
-        //{
-        //    string connectionString = configuration.GetConnectionString("HotelConnection");
-        //    List<Booking> lst = new List<Booking>();
-        //    string sql = @"SELECT COUNT(Booking.Booking_id) FROM Hotel, Booking
-        //                WHERE Booking.Hotel_No = Hotel.Hotel_No 
-        //                AND Booking.Date_From <= '2011/03/31'
-        //                AND Booking.Date_To >= '2011/03/01'";
-        //    using (SqlConnection connection = new SqlConnection(connectionString))
-        //    {
-        //        connection.Open();
-        //        SqlCommand command = new SqlCommand(sql, connection);
-        //        command.Parameters.AddWithValue("@roomid",roomid);
-        //        using (SqlDataReader dataReader = command.ExecuteReader())
-        //        {
-        //            while (dataReader.Read())
-        //            {
-        //                Booking booking = new Booking();
-        //                booking.Guest = new Guest();
-        //                booking.BookingId = Convert.ToInt32(dataReader[0]);
-        //                booking.DateFrom = Convert.ToDateTime(dataReader[1]);
-        //                booking.DateTo = Convert.ToDateTime(dataReader[2]);
-        //                booking.Guest.Name = Convert.ToString(dataReader[3]);
-        //                booking.Guest.Address = Convert.ToString(dataReader[4]);
-        //                lst.Add(booking);
-        //            }
-        //        }
-        //    }
-        //    return lst;
-        //}
+        public int GetBookinsPerHotel()
+        {
+            string connectionString = configuration.GetConnectionString("HotelConnection");
+            List<Booking> lst = new List<Booking>();
+            string sql = @"SELECT Hotel.Name, COUNT(Booking.Booking_id)
+FROM Hotel, Booking
+WHERE Hotel.Name = 'Prindsen'
+AND Booking.Date_From <= '2011/03/31'
+AND Booking.Date_To >= '2011/03/01'
+GROUP BY Hotel.Name";
+            int bookings = 0;
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand(sql, connection);
+                using (SqlDataReader dataReader = command.ExecuteReader())
+                {
+                    while (dataReader.Read())
+                    {
+                        if (dataReader[1] == DBNull.Value)
+                        {
+                            return 0;
+                        }
+                        bookings = Convert.ToInt32(dataReader[1]);
+                    }
+                }
+            }
+            return bookings;
+        }
 
     }
 }

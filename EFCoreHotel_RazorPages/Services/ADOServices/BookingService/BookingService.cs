@@ -26,9 +26,14 @@ namespace EFCoreHotel_RazorPages.Services.ADOServices.BookingService
             return bookingService.GetBookingsByGuestNo(guestNo);
         }
 
-        public IEnumerable<Booking> GetBookingInfo(int roomid)
+        public IEnumerable<Booking> GetBookingInfo(int roomid, int hotelid)
         {
-            return bookingService.GetBookingInfo(roomid);
+            return bookingService.GetBookingInfo(roomid, hotelid);
+        }
+
+        public int GetBookinsPerHotel()
+        {
+            return bookingService.GetBookinsPerHotel();
         }
     }
 }

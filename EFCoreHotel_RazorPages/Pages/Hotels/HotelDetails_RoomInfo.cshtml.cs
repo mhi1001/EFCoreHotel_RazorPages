@@ -20,9 +20,9 @@ namespace EFCoreHotel_RazorPages.Pages.Hotels
             bookingService = service;
         }
 
-        public void OnGet(int roomid)
+        public void OnGet(int roomid, int hotelid)
         {
-            Bookings = bookingService.GetBookingInfo(roomid);
+            Bookings = bookingService.GetBookingInfo(roomid, hotelid);
         }
     }
 }

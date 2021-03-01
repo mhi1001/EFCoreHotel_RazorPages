@@ -30,12 +30,30 @@
 --WHERE Booking.Guest_No = Guest.Guest_No 
 --AND Booking.Room_No = 1
 
-select Booking.Booking_id, Booking.Date_From, Booking.Date_To, Guest.Name, Guest.Address
-FROM Booking, Guest
-WHERE Guest.Guest_No = Booking.Guest_No
-AND Booking.Room_No = 11
+--Get All bookings of a specific hotel
+--select Booking.Booking_id, Booking.Date_From, Booking.Date_To, Guest.Name, Guest.Address
+--FROM Booking, Guest
+--WHERE Guest.Guest_No = Booking.Guest_No
+--AND Booking.Room_No = 11
 
 
 
 
+--SELECT Hotel.Name, COUNT(Booking.Booking_id)
+--FROM Hotel, Booking
+--WHERE Hotel.Name = 'Prindsen'
+--AND Booking.Date_From <= '2011/03/31'
+--AND Booking.Date_To >= '2011/03/01'
+--GROUP BY Hotel.Name
 
+
+--select * from Booking where Booking.Hotel_No = 6 and Booking.Room_No = 1
+
+
+
+SELECT Hotel.Name, COUNT(Booking.Booking_id)
+FROM Hotel, Booking
+WHERE Hotel.Name = 'Prindsen'
+AND Booking.Date_From <= '2011/03/31'
+AND Booking.Date_To >= '2011/03/01'
+GROUP BY Hotel.Name

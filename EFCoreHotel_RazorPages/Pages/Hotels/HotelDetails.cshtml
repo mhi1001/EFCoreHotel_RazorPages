@@ -26,7 +26,7 @@
                     <td>  @item.HotelNo </td>
                     <td>  @item.Types </td>
                     <td> @item.Price</td>
-                     <td><a asp-route-roomid="@item.RoomNo" asp-page="HotelDetails_RoomInfo">Room Bookings Info</a></td>
+                     <td><a asp-route-roomid="@item.RoomNo"asp-route-hotelid="@item.HotelNo" asp-page="HotelDetails_RoomInfo">Room Bookings Info</a></td>
                 </tr>
             }
         }
